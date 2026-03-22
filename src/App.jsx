@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Flower2, Sparkles, Send, RefreshCcw } from 'lucide-react';
+import { Heart, Flower2, Sparkles, Send, RefreshCcw, Volume2, VolumeX } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const Sunflower = ({ delay = 0, scale = 1, x = 0, y = 0 }) => (
@@ -188,14 +188,35 @@ export default function App() {
   const name = "Isabel"; // Fixed name for the special person
   const [showMessage, setShowMessage] = useState(false);
   const [flowers, setFlowers] = useState([]);
+  
+  // Robust Audio Handling
   const [audio] = useState(new Audio('/musica.mp3'));
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    audio.loop = true;
+    return () => {
+      audio.pause();
+    };
+  }, [audio]);
+
+  const toggleMusic = () => {
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play().catch(e => console.error("Error playing audio:", e));
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   const handleStart = () => {
     setHasStarted(true);
     triggerConfetti();
     
-    // Play the song
-    audio.play().catch(e => console.log("Auto-play blocked or error:", e));
+    // Force play on first interaction
+    audio.play()
+      .then(() => setIsPlaying(true))
+      .catch(e => console.log("Auto-play blocked, user needs to click the music icon:", e));
 
     const newFlowers = [
       { id: 1, x: 15, y: 25, delay: 0.2, scale: 0.75 },
@@ -206,7 +227,7 @@ export default function App() {
       { id: 6, x: 40, y: 20, delay: 1.7, scale: 0.6 },
     ];
     setFlowers(newFlowers);
-
+    
     setTimeout(() => {
       setShowMessage(true);
     }, 2500);
@@ -329,7 +350,7 @@ export default function App() {
                     position: 'absolute',
                     top: '15%',
                     left: '50%',
-                    background: 'rgba(255, 255, 255, 0.8)',
+                    background: 'rgba(255, 255, 255, 0.82)',
                     backdropFilter: 'blur(20px)',
                     padding: '40px 25px',
                     borderRadius: '35px',
@@ -343,6 +364,26 @@ export default function App() {
                     alignItems: 'center'
                   }}
                 >
+                  {/* Music Control Indicator */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={toggleMusic}
+                    style={{
+                      position: 'absolute',
+                      top: '20px',
+                      right: '25px',
+                      background: 'rgba(255, 215, 0, 0.15)',
+                      border: 'none',
+                      padding: '10px',
+                      borderRadius: '50%',
+                      cursor: 'pointer',
+                      color: isPlaying ? '#ff9800' : '#8d6e63'
+                    }}
+                  >
+                    {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
+                  </motion.button>
+
                   <motion.div
                     animate={{ scale: [1, 1.3, 1] }}
                     transition={{ repeat: Infinity, duration: 2 }}
@@ -350,20 +391,20 @@ export default function App() {
                   >
                     <Heart size={44} color="#e91e63" fill="#e91e63" />
                   </motion.div>
-
-                  <h2 className="romantic-text" style={{
-                    fontSize: 'clamp(2rem, 8vw, 3rem)',
-                    color: '#3e2723',
+                  
+                  <h2 className="romantic-text" style={{ 
+                    fontSize: 'clamp(2rem, 8vw, 3rem)', 
+                    color: '#3e2723', 
                     marginBottom: '15px',
                     lineHeight: 1.2
                   }}>
                     ¡Feliz 21 de Marzo, {name}!
                   </h2>
-
-                  <p style={{
-                    fontSize: 'clamp(1rem, 4vw, 1.3rem)',
-                    color: '#4e342e',
-                    lineHeight: '1.6',
+                  
+                  <p style={{ 
+                    fontSize: 'clamp(1rem, 4vw, 1.3rem)', 
+                    color: '#4e342e', 
+                    lineHeight: '1.6', 
                     fontStyle: 'italic',
                     maxWidth: '100%'
                   }}>
