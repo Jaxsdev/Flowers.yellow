@@ -175,6 +175,12 @@ export default function App() {
         });
       }
     }
+    
+    // Add 3 strategic flowers to fill blank gaps
+    suns.push({ id: 'gap-1', x: 35, y: 5, delay: 2.5, scale: 0.5 });
+    suns.push({ id: 'gap-2', x: 55, y: 75, delay: 2.8, scale: 0.6 });
+    suns.push({ id: 'gap-3', x: 10, y: 2, delay: 3.1, scale: 0.45 });
+    
     setFlowers(suns);
 
     // Mini flowers scattered mostly in the background/edges
