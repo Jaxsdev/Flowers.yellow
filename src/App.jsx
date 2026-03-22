@@ -158,24 +158,40 @@ export default function App() {
         .catch(e => console.log("Audio blocked:", e));
     }
 
-    // Dynamic Ocean of Flowers (Huge amount for dense garden effect)
-    const generatedFlowers = [...Array(16)].map((_, i) => ({
-      id: `sun-${i}`,
-      x: Math.random() * 92 + 2, // 2% to 94% range
-      y: Math.random() * 80 + 5,  // 5% to 85% range
-      delay: Math.random() * 2.5 + 0.2,
-      scale: Math.random() * 0.5 + 0.6 // From 0.6x to 1.1x
-    }));
-    setFlowers(generatedFlowers);
+    // Grid-based smart distribution (Prevents clustering)
+    const suns = [];
+    const gridSize = 4; // 4x4 grid
+    for (let row = 0; row < gridSize; row++) {
+      for (let col = 0; col < gridSize; col++) {
+        // Only skip a few cells in the center to let the message breathe
+        if (row >= 1 && row <= 2 && col >= 1 && col <= 2 && Math.random() > 0.4) continue;
+        
+        suns.push({
+          id: `sun-${row}-${col}`,
+          x: (col * (100 / gridSize)) + (Math.random() * 10),
+          y: (row * (85 / gridSize)) + (Math.random() * 15),
+          delay: (row + col) * 0.15 + Math.random() * 0.5,
+          scale: 0.6 + Math.random() * 0.4
+        });
+      }
+    }
+    setFlowers(suns);
 
-    const generatedMini = [...Array(35)].map((_, i) => ({
-      id: `mini-${i}`,
-      x: Math.random() * 95,
-      y: Math.random() * 85,
-      delay: Math.random() * 3 + 0.5,
-      scale: Math.random() * 0.4 + 0.5
-    }));
-    setMiniFlowers(generatedMini);
+    const minis = [];
+    const miniGrid = 6; // 6x6 grid
+    for (let r = 0; r < miniGrid; r++) {
+      for (let c = 0; c < miniGrid; c++) {
+        if (Math.random() > 0.7) continue; // Randomly omit some for more natural look
+        minis.push({
+          id: `mini-${r}-${c}`,
+          x: (c * (100 / miniGrid)) + (Math.random() * 12),
+          y: (r * (90 / miniGrid)) + (Math.random() * 12),
+          delay: Math.random() * 2 + 0.5,
+          scale: 0.4 + Math.random() * 0.3
+        });
+      }
+    }
+    setMiniFlowers(minis);
     
     setTimeout(() => {
       setShowMessage(true);
