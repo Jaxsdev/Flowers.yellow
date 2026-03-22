@@ -123,16 +123,16 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- COLLISION-AWARE DISPERSION (14 Flowers) ---
+    // --- COLLISION-AWARE DISPERSION (11 Flowers) ---
     const newFlowers = [];
-    const maxFlowers = 14; 
-    const minDistance = 19; // Slightly increased for more air
+    const maxFlowers = 11;
+    const minDistance = 21; // Increased air for maximum separation
 
     for (let i = 0; i < maxFlowers; i++) {
       let placed = false;
       let tries = 0;
       while (!placed && tries < 50) {
-        // Shifted Left (2-82%) and Up (2-72%)
+        // Shifted Left and Up as requested before
         const x = Math.random() * 80 + 2;
         const y = Math.random() * 70 + 2;
         
@@ -147,7 +147,7 @@ export default function App() {
             id: `safe-sun-${i}`,
             x, y,
             delay: Math.random() * 2.5,
-            scale: 0.6 + Math.random() * 0.45
+            scale: 0.65 + Math.random() * 0.4
           });
           placed = true;
         }
