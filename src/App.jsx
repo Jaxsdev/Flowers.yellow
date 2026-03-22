@@ -102,32 +102,11 @@ const FloatingPetal = ({ delay }) => {
   );
 };
 
-// Flower Variant Component (Smaller Flowers)
-const MiniFlower = ({ delay = 0, scale = 1, x = 0, y = 0 }) => (
-  <motion.div
-    initial={{ scale: 0, opacity: 0 }}
-    animate={{ scale: scale, opacity: 0.6 }}
-    transition={{ delay: delay, duration: 1 }}
-    style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, zIndex: 3 }}
-  >
-    <div style={{ position: 'relative', width: 'clamp(30px, 8vw, 40px)', height: 'clamp(30px, 8vw, 40px)' }}>
-      {[...Array(6)].map((_, i) => (
-        <div key={i} style={{
-          position: 'absolute',
-          width: '40%',
-          height: '60%',
-          background: '#fdd835',
-          borderRadius: '50%',
-          left: '30%',
-          top: '0',
-          transformOrigin: '50% 100%',
-          rotate: `${i * 60}deg`
-        }} />
-      ))}
-      <div style={{ position: 'absolute', width: '35%', height: '35%', background: '#5d4037', borderRadius: '50%', left: '32.5%', top: '32.5%' }} />
-    </div>
-  </motion.div>
-);
+// Flower component rendered inside the App
+const sunflowerAnimation = {
+  initial: { scale: 0, rotate: -45, opacity: 0 },
+  animate: { scale: (s) => s, rotate: 0, opacity: 1 },
+};
 
 export default function App() {
   const [hasStarted, setHasStarted] = useState(false);
@@ -155,40 +134,17 @@ export default function App() {
       audioRef.current.play().catch(e => console.log("Audio blocked:", e));
     }
 
-    // Two-Column Staggered Layout (Safe for mobile widths)
-    const suns = [];
-    const rows = 5;
-    const cols = 2; // Only 2 columns to prevent X-axis overlap
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        // Skip some in the middle rows to avoid cluttering the message area
-        if (r >= 1 && r <= 3 && Math.random() > 0.4) continue;
-        
-        suns.push({
-          id: `sun-${r}-${c}`,
-          // Left column (5-15%) or Right column (65-75%)
-          // Since flower is ~30vw, this leaves a huge gap in the middle
-          x: c === 0 ? (Math.random() * 10 + 5) : (Math.random() * 10 + 65),
-          y: (r * 18) + (Math.random() * 8),
-          delay: (r + c) * 0.25,
-          scale: 0.7 + Math.random() * 0.3
-        });
-      }
-    }
-    setFlowers(suns);
-
-    // Mini flowers scattered mostly in the background/edges
-    const minis = [];
-    for (let i = 0; i < 25; i++) {
-      minis.push({
-        id: `mini-${i}`,
-        x: Math.random() * 90,
-        y: Math.random() * 90,
-        delay: Math.random() * 2 + 1,
-        scale: 0.4 + Math.random() * 0.2
-      });
-    }
-    setMiniFlowers(minis);
+    // Back to the original 6 perfect flowers
+    const initialFlowers = [
+      { id: 1, x: 15, y: 25, delay: 0.2, scale: 0.75 },
+      { id: 2, x: 75, y: 20, delay: 0.5, scale: 1.1 },
+      { id: 3, x: 48, y: 50, delay: 0.8, scale: 0.95 },
+      { id: 4, x: 20, y: 65, delay: 1.1, scale: 1.2 },
+      { id: 5, x: 80, y: 70, delay: 1.4, scale: 0.8 },
+      { id: 6, x: 40, y: 20, delay: 1.7, scale: 0.6 },
+    ];
+    setFlowers(initialFlowers);
+    setMiniFlowers([]); // Clear mini flowers
     
     setTimeout(() => { setShowMessage(true); }, 2200);
   };
@@ -289,11 +245,6 @@ export default function App() {
         ) : (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
-              {/* Mini flowers for density */}
-              {miniFlowers.map(flower => (
-                <MiniFlower key={flower.id} {...flower} />
-              ))}
-
               {/* Sunflowers blooming in the background */}
               {flowers.map(flower => (
                 <Sunflower key={flower.id} {...flower} />
