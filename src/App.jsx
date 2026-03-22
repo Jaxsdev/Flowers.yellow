@@ -123,19 +123,19 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- FIXED ARTISTIC FRAME (Reverted to compact version) ---
+    // --- FIXED ARTISTIC FRAME (Refined Left/Up) ---
     const artisticPositions = [
-      { x: 5,  y: 6,  s: 0.9, d: 0.2 }, // Top Left 
-      { x: 40, y: 5,  s: 0.8, d: 0.6 }, // Top center-ish 
-      { x: 78, y: 10, s: 1.0, d: 1.0 }, // Top Right 
-      { x: 4,  y: 35, s: 0.8, d: 1.4 }, // Mid Left 
-      { x: 82, y: 32, s: 0.9, d: 1.8 }, // Mid Right 
-      { x: 8,  y: 72, s: 1.1, d: 2.2 }, // Bottom Left 
-      { x: 35, y: 82, s: 0.9, d: 2.6 }, // Bottom Center 
-      { x: 72, y: 78, s: 1.0, d: 3.0 }, // Bottom Right 
-      { x: 22, y: 18, s: 0.7, d: 0.8 }, // Inner A 
-      { x: 64, y: 16, s: 0.8, d: 1.2 }, // Inner B 
-      { x: 12, y: 52, s: 0.7, d: 2.0 }, // Inner C 
+      { x: 2,  y: 4,  s: 0.9, d: 0.2 }, // Top Left (Micro-Shifted)
+      { x: 37, y: 3,  s: 0.8, d: 0.6 }, // Top center-ish (Micro-Shifted)
+      { x: 75, y: 8,  s: 1.0, d: 1.0 }, // Top Right (Micro-Shifted)
+      { x: 1,  y: 33, s: 0.8, d: 1.4 }, // Mid Left (Micro-Shifted)
+      { x: 79, y: 30, s: 0.9, d: 1.8 }, // Mid Right (Micro-Shifted)
+      { x: 5,  y: 70, s: 1.1, d: 2.2 }, // Bottom Left (Micro-Shifted)
+      { x: 32, y: 80, s: 0.9, d: 2.6 }, // Bottom Center (Micro-Shifted)
+      { x: 69, y: 76, s: 1.0, d: 3.0 }, // Bottom Right (Micro-Shifted)
+      { x: 19, y: 16, s: 0.7, d: 0.8 }, // Inner A (Micro-Shifted)
+      { x: 61, y: 14, s: 0.8, d: 1.2 }, // Inner B (Micro-Shifted)
+      { x: 9,  y: 50, s: 0.7, d: 2.0 }, // Inner C (Micro-Shifted)
     ];
 
     const fixedGarden = artisticPositions.map((p, i) => ({
