@@ -201,18 +201,18 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 4.5, duration: 1.2, ease: "easeOut" }}
               style={{
-                background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(25px)', padding: '35px 22px',
+                background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(25px)', padding: '30px 20px',
                 borderRadius: '35px', boxShadow: '0 40px 80px rgba(0,0,0,0.15)', textAlign: 'center',
-                width: 'min(78%, 420px)', zIndex: 999, border: '1px solid rgba(255,255,255,0.5)', position: 'relative'
+                width: 'min(70%, 380px)', zIndex: 999, border: '1px solid rgba(255,255,255,0.5)', position: 'relative'
               }}
             >
-              <Heart size={36} color="#e91e63" fill="#e91e63" style={{ margin: '0 auto 12px' }} />
-              <h2 className="romantic-text" style={{ fontSize: '2.1rem', color: '#3e2723', marginBottom: '12px', lineHeight: '1.1' }}>
+              <Heart size={32} color="#e91e63" fill="#e91e63" style={{ margin: '0 auto 10px' }} />
+              <h2 className="romantic-text" style={{ fontSize: '1.8rem', color: '#3e2723', marginBottom: '10px', lineHeight: '1.1' }}>
                 ¡Feliz 21 de Marzo, {name}!
               </h2>
-              <p style={{ fontSize: '1.1rem', color: '#4e342e', fontStyle: 'italic', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '0.95rem', color: '#4e342e', fontStyle: 'italic', lineHeight: '1.5' }}>
                 Buenas noches Isabel, estas flores amarillas son como tu sonrisa:<br />
-                <strong style={{ color: '#f57f17', display: 'block', margin: '8px 0' }}>Que iluminan el mundo entero.</strong>
+                <strong style={{ color: '#f57f17', display: 'block', margin: '5px 0' }}>Que iluminan el mundo entero.</strong>
                 Cada pétalo es un recordatorio de lo especial que eres para mí. Gracias por ser esa luz constante. 💛
               </p>
             </motion.div>
