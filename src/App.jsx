@@ -8,30 +8,71 @@ const Sunflower = ({ delay = 0, scale = 1, x = 0, y = 0 }) => (
   <motion.div
     initial={{ scale: 0, rotate: -45, opacity: 0 }}
     animate={{ scale: scale, rotate: 0, opacity: 1 }}
-    transition={{ type: "spring", stiffness: 40, damping: 12, delay: delay, duration: 2 }}
+    transition={{ type: "spring", stiffness: 45, damping: 14, delay: delay, duration: 2.5 }}
     style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, zIndex: 10, transform: 'translate(-50%, -50%)' }}
   >
-    <div style={{ position: 'relative', width: 'clamp(90px, 25vw, 130px)', aspectRatio: '1/1' }}>
+    <div style={{ position: 'relative', width: 'clamp(100px, 28vw, 140px)', aspectRatio: '1/1' }}>
+      {/* Improved Stem Structure (Anchor: Top 60%) */}
       <motion.div 
         initial={{ height: 0 }}
-        animate={{ height: 'clamp(140px, 35vh, 190px)' }}
-        transition={{ delay: delay, duration: 1.5 }}
+        animate={{ height: 'clamp(160px, 45vh, 220px)' }}
+        transition={{ delay: delay + 0.5, duration: 1.5 }}
         style={{
-          width: '7px', background: 'linear-gradient(to top, #1b5e20, #4caf50)',
-          position: 'absolute', bottom: '-100%', left: '46%', borderRadius: '5px', zIndex: 1
+          width: 'clamp(7px, 1.8vw, 11px)',
+          background: 'linear-gradient(to right, #1b5e20, #4caf50, #1b5e20)',
+          position: 'absolute',
+          top: '60%', // Starts inside the flower center
+          left: '46%',
+          borderRadius: '0 0 10px 10px',
+          zIndex: 1,
+          boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
         }}
       >
-        <div style={{ position: 'absolute', width: '25px', height: '14px', background: '#2e7d32', borderRadius: '100% 0 100% 0', left: '-22px', top: '20%' }} />
-        <div style={{ position: 'absolute', width: '25px', height: '14px', background: '#388e3c', borderRadius: '0 100% 0 100%', right: '-22px', top: '40%' }} />
+        {/* Dynamic Leaves */}
+        <motion.div 
+          animate={{ rotate: [-5, 5, -5] }}
+          transition={{ repeat: Infinity, duration: 4 }}
+          style={{ position: 'absolute', width: '35px', height: '22px', background: 'linear-gradient(45deg, #1b5e20, #388e3c)', borderRadius: '100% 0 100% 0', left: '-30px', top: '25%', transformOrigin: 'right center' }}
+        />
+        <motion.div 
+          animate={{ rotate: [5, -5, 5] }}
+          transition={{ repeat: Infinity, duration: 4 }}
+          style={{ position: 'absolute', width: '35px', height: '22px', background: 'linear-gradient(-45deg, #1b5e20, #4caf50)', borderRadius: '0 100% 0 100%', right: '-30px', top: '45%', transformOrigin: 'left center' }} 
+        />
       </motion.div>
-      {[...Array(16)].map((_, i) => (
+
+      {/* High-Quality Petals (Double Layer) */}
+      {[...Array(18)].map((_, i) => (
         <div key={i} style={{
-          position: 'absolute', width: '30%', height: '50%', background: i % 2 === 0 ? '#fbc02d' : '#fdd835',
-          borderRadius: '50% 50% 50% 50% / 80% 80% 20% 20%', left: '35%', top: '0', transformOrigin: '50% 100%',
-          rotate: `${i * 22.5}deg`, zIndex: 3, boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
+          position: 'absolute',
+          width: '32%',
+          height: '52%',
+          background: i % 2 === 0 ? 'linear-gradient(to bottom, #fbc02d, #f9a825)' : 'linear-gradient(to bottom, #ffeb3b, #fbc02d)',
+          borderRadius: '50% 50% 50% 50% / 80% 80% 20% 20%',
+          left: '34.5%',
+          top: '0',
+          transformOrigin: '50% 100%',
+          rotate: `${i * 20}deg`,
+          zIndex: 3,
+          boxShadow: '0 3px 6px rgba(0,0,0,0.1)',
+          border: '1px solid rgba(0,0,0,0.02)'
         }} />
       ))}
-      <div style={{ position: 'absolute', width: '45%', height: '45%', backgroundColor: '#3e2723', borderRadius: '50%', left: '27.5%', top: '27.5%', zIndex: 4, border: '2px solid #5d4037' }} />
+
+      {/* Texturized Center */}
+      <div style={{
+        position: 'absolute',
+        width: '46%',
+        height: '46%',
+        backgroundColor: '#3e2723',
+        backgroundImage: 'radial-gradient(circle, #5d4037 20%, #3e2723 80%)',
+        borderRadius: '50%',
+        left: '27.5%',
+        top: '27.5%',
+        zIndex: 4,
+        border: '3px solid #5d4037',
+        boxShadow: 'inset 0 0 15px rgba(0,0,0,0.6), 0 5px 15px rgba(0,0,0,0.2)'
+      }} />
     </div>
   </motion.div>
 );
