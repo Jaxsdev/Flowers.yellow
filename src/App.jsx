@@ -123,19 +123,19 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- FIXED ARTISTIC DISPERSION (Recalibrated Left/Up) ---
+    // --- FIXED ARTISTIC FRAME (Expanded Outward) ---
     const artisticPositions = [
-      { x: 5,  y: 6,  s: 0.9, d: 0.2 }, // Top Left (Shifted)
-      { x: 40, y: 5,  s: 0.8, d: 0.6 }, // Top center-ish (Shifted)
-      { x: 78, y: 10, s: 1.0, d: 1.0 }, // Top Right (Shifted)
-      { x: 4,  y: 35, s: 0.8, d: 1.4 }, // Mid Left (Shifted)
-      { x: 82, y: 32, s: 0.9, d: 1.8 }, // Mid Right (Shifted)
-      { x: 8,  y: 72, s: 1.1, d: 2.2 }, // Bottom Left (Shifted)
-      { x: 35, y: 82, s: 0.9, d: 2.6 }, // Bottom Center (Shifted)
-      { x: 72, y: 78, s: 1.0, d: 3.0 }, // Bottom Right (Shifted)
-      { x: 22, y: 18, s: 0.7, d: 0.8 }, // Inner Support 1 (Shifted)
-      { x: 64, y: 16, s: 0.8, d: 1.2 }, // Inner Support 2 (Shifted)
-      { x: 12, y: 52, s: 0.7, d: 2.0 }, // Inner Support 3 (Shifted)
+      { x: 3,  y: 4,  s: 0.9, d: 0.1 }, // Top Left (Pinned)
+      { x: 45, y: 3,  s: 0.8, d: 0.4 }, // Top center-ish (Pinned)
+      { x: 92, y: 5,  s: 1.0, d: 0.8 }, // Top Right (Pinned)
+      { x: 2,  y: 42, s: 0.8, d: 1.1 }, // Mid Left (Pinned)
+      { x: 96, y: 38, s: 0.9, d: 1.5 }, // Mid Right (Pinned)
+      { x: 5,  y: 88, s: 1.1, d: 1.9 }, // Bottom Left (Pinned)
+      { x: 45, y: 94, s: 0.9, d: 2.3 }, // Bottom Center (Pinned)
+      { x: 90, y: 92, s: 1.0, d: 2.7 }, // Bottom Right (Pinned)
+      { x: 18, y: 15, s: 0.7, d: 0.5 }, // Inner A (Shifted)
+      { x: 78, y: 12, s: 0.8, d: 0.9 }, // Inner B (Shifted)
+      { x: 6,  y: 58, s: 0.7, d: 1.6 }, // Inner C (Shifted)
     ];
 
     const fixedGarden = artisticPositions.map((p, i) => ({
