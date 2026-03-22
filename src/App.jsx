@@ -123,20 +123,19 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- FIXED ARTISTIC DISPERSION (11 Flowers in a dynamic arc) ---
-    // Pre-calculated coordinates to surround the message without being a square
+    // --- FIXED ARTISTIC DISPERSION (Recalibrated Left/Up) ---
     const artisticPositions = [
-      { x: 12, y: 12, s: 0.9, d: 0.2 }, // Top Left
-      { x: 50, y: 8,  s: 0.8, d: 0.6 }, // Top center-ish
-      { x: 88, y: 15, s: 1.0, d: 1.0 }, // Top Right
-      { x: 10, y: 45, s: 0.8, d: 1.4 }, // Mid Left
-      { x: 92, y: 40, s: 0.9, d: 1.8 }, // Mid Right
-      { x: 15, y: 82, s: 1.1, d: 2.2 }, // Bottom Left
-      { x: 45, y: 92, s: 0.9, d: 2.6 }, // Bottom Center
-      { x: 82, y: 88, s: 1.0, d: 3.0 }, // Bottom Right
-      { x: 28, y: 25, s: 0.7, d: 0.8 }, // Inner Support 1
-      { x: 74, y: 22, s: 0.8, d: 1.2 }, // Inner Support 2
-      { x: 18, y: 62, s: 0.7, d: 2.0 }, // Inner Support 3
+      { x: 5,  y: 6,  s: 0.9, d: 0.2 }, // Top Left (Shifted)
+      { x: 40, y: 5,  s: 0.8, d: 0.6 }, // Top center-ish (Shifted)
+      { x: 78, y: 10, s: 1.0, d: 1.0 }, // Top Right (Shifted)
+      { x: 4,  y: 35, s: 0.8, d: 1.4 }, // Mid Left (Shifted)
+      { x: 82, y: 32, s: 0.9, d: 1.8 }, // Mid Right (Shifted)
+      { x: 8,  y: 72, s: 1.1, d: 2.2 }, // Bottom Left (Shifted)
+      { x: 35, y: 82, s: 0.9, d: 2.6 }, // Bottom Center (Shifted)
+      { x: 72, y: 78, s: 1.0, d: 3.0 }, // Bottom Right (Shifted)
+      { x: 22, y: 18, s: 0.7, d: 0.8 }, // Inner Support 1 (Shifted)
+      { x: 64, y: 16, s: 0.8, d: 1.2 }, // Inner Support 2 (Shifted)
+      { x: 12, y: 52, s: 0.7, d: 2.0 }, // Inner Support 3 (Shifted)
     ];
 
     const fixedGarden = artisticPositions.map((p, i) => ({
