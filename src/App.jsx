@@ -158,27 +158,24 @@ export default function App() {
         .catch(e => console.log("Audio blocked:", e));
     }
 
-    // Huge amount of flowers!
-    const newFlowers = [
-      { id: 1, x: 5, y: 15, delay: 0.2, scale: 0.7 },
-      { id: 2, x: 70, y: 10, delay: 0.5, scale: 1.0 },
-      { id: 3, x: 40, y: 45, delay: 0.8, scale: 1.1 },
-      { id: 4, x: 10, y: 65, delay: 1.1, scale: 0.9 },
-      { id: 5, x: 80, y: 70, delay: 1.4, scale: 0.8 },
-      { id: 6, x: 30, y: 10, delay: 1.7, scale: 0.5 },
-      { id: 7, x: 85, y: 40, delay: 2.0, scale: 0.6 },
-    ];
-    setFlowers(newFlowers);
-
-    // Add mini flowers for variety
-    const newMini = [...Array(12)].map((_, i) => ({
-      id: i,
-      x: Math.random() * 90,
-      y: Math.random() * 80,
-      delay: Math.random() * 2 + 1,
-      scale: Math.random() * 0.4 + 0.4
+    // Dynamic Ocean of Flowers (Huge amount for dense garden effect)
+    const generatedFlowers = [...Array(16)].map((_, i) => ({
+      id: `sun-${i}`,
+      x: Math.random() * 92 + 2, // 2% to 94% range
+      y: Math.random() * 80 + 5,  // 5% to 85% range
+      delay: Math.random() * 2.5 + 0.2,
+      scale: Math.random() * 0.5 + 0.6 // From 0.6x to 1.1x
     }));
-    setMiniFlowers(newMini);
+    setFlowers(generatedFlowers);
+
+    const generatedMini = [...Array(35)].map((_, i) => ({
+      id: `mini-${i}`,
+      x: Math.random() * 95,
+      y: Math.random() * 85,
+      delay: Math.random() * 3 + 0.5,
+      scale: Math.random() * 0.4 + 0.5
+    }));
+    setMiniFlowers(generatedMini);
     
     setTimeout(() => {
       setShowMessage(true);
