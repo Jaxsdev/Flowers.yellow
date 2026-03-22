@@ -151,51 +151,46 @@ export default function App() {
   const handleStart = () => {
     setHasStarted(true);
     triggerConfetti();
-    
-    // Crucial for iOS: Play immediately on user click
     if (audioRef.current) {
-      audioRef.current.play()
-        .catch(e => console.log("Audio blocked:", e));
+      audioRef.current.play().catch(e => console.log("Audio blocked:", e));
     }
 
-    // Grid-based smart distribution (Prevents clustering)
+    // Two-Column Staggered Layout (Safe for mobile widths)
     const suns = [];
-    const gridSize = 4; // 4x4 grid
-    for (let row = 0; row < gridSize; row++) {
-      for (let col = 0; col < gridSize; col++) {
-        // Only skip a few cells in the center to let the message breathe
-        if (row >= 1 && row <= 2 && col >= 1 && col <= 2 && Math.random() > 0.4) continue;
+    const rows = 5;
+    const cols = 2; // Only 2 columns to prevent X-axis overlap
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        // Skip some in the middle rows to avoid cluttering the message area
+        if (r >= 1 && r <= 3 && Math.random() > 0.4) continue;
         
         suns.push({
-          id: `sun-${row}-${col}`,
-          x: (col * (100 / gridSize)) + (Math.random() * 10),
-          y: (row * (85 / gridSize)) + (Math.random() * 15),
-          delay: (row + col) * 0.15 + Math.random() * 0.5,
-          scale: 0.6 + Math.random() * 0.4
+          id: `sun-${r}-${c}`,
+          // Left column (5-15%) or Right column (65-75%)
+          // Since flower is ~30vw, this leaves a huge gap in the middle
+          x: c === 0 ? (Math.random() * 10 + 5) : (Math.random() * 10 + 65),
+          y: (r * 18) + (Math.random() * 8),
+          delay: (r + c) * 0.25,
+          scale: 0.7 + Math.random() * 0.3
         });
       }
     }
     setFlowers(suns);
 
+    // Mini flowers scattered mostly in the background/edges
     const minis = [];
-    const miniGrid = 6; // 6x6 grid
-    for (let r = 0; r < miniGrid; r++) {
-      for (let c = 0; c < miniGrid; c++) {
-        if (Math.random() > 0.7) continue; // Randomly omit some for more natural look
-        minis.push({
-          id: `mini-${r}-${c}`,
-          x: (c * (100 / miniGrid)) + (Math.random() * 12),
-          y: (r * (90 / miniGrid)) + (Math.random() * 12),
-          delay: Math.random() * 2 + 0.5,
-          scale: 0.4 + Math.random() * 0.3
-        });
-      }
+    for (let i = 0; i < 25; i++) {
+      minis.push({
+        id: `mini-${i}`,
+        x: Math.random() * 90,
+        y: Math.random() * 90,
+        delay: Math.random() * 2 + 1,
+        scale: 0.4 + Math.random() * 0.2
+      });
     }
     setMiniFlowers(minis);
     
-    setTimeout(() => {
-      setShowMessage(true);
-    }, 2200);
+    setTimeout(() => { setShowMessage(true); }, 2200);
   };
 
   const triggerConfetti = () => {
