@@ -102,11 +102,32 @@ const FloatingPetal = ({ delay }) => {
   );
 };
 
-// Flower component rendered inside the App
-const sunflowerAnimation = {
-  initial: { scale: 0, rotate: -45, opacity: 0 },
-  animate: { scale: (s) => s, rotate: 0, opacity: 1 },
-};
+// Flower Variant Component (Smaller Flowers - No stalk)
+const MiniFlower = ({ delay = 0, scale = 1, x = 0, y = 0 }) => (
+  <motion.div
+    initial={{ scale: 0, opacity: 0 }}
+    animate={{ scale: scale, opacity: 0.6 }}
+    transition={{ delay: delay, duration: 1 }}
+    style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, zIndex: 3 }}
+  >
+    <div style={{ position: 'relative', width: 'clamp(25px, 6vw, 35px)', height: 'clamp(25px, 6vw, 35px)' }}>
+      {[...Array(6)].map((_, i) => (
+        <div key={i} style={{
+          position: 'absolute',
+          width: '40%',
+          height: '60%',
+          background: '#fdd835',
+          borderRadius: '50%',
+          left: '30%',
+          top: '0',
+          transformOrigin: '50% 100%',
+          rotate: `${i * 60}deg`
+        }} />
+      ))}
+      <div style={{ position: 'absolute', width: '35%', height: '35%', background: '#5d4037', borderRadius: '50%', left: '32.5%', top: '32.5%' }} />
+    </div>
+  </motion.div>
+);
 
 export default function App() {
   const [hasStarted, setHasStarted] = useState(false);
@@ -117,6 +138,7 @@ export default function App() {
   
   // Ref for Audio (Better for iOS)
   const audioRef = React.useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     // Initialize audio on mount
@@ -134,19 +156,37 @@ export default function App() {
       audioRef.current.play().catch(e => console.log("Audio blocked:", e));
     }
 
-    // 6 strategic flowers that peek out perfectly on Mobile/iPhone
-    const initialFlowers = [
-      { id: 1, x: 8, y: 12, delay: 0.2, scale: 0.75 },   // Top Left Corner
-      { id: 2, x: 92, y: 15, delay: 0.5, scale: 0.9 },   // Top Right Corner
-      { id: 3, x: 15, y: 85, delay: 0.8, scale: 1.1 },   // Bottom Left
-      { id: 4, x: 85, y: 80, delay: 1.1, scale: 1.2 },   // Bottom Right
-      { id: 5, x: 5, y: 50, delay: 1.4, scale: 0.8 },    // Mid Left
-      { id: 6, x: 95, y: 45, delay: 1.7, scale: 0.7 },    // Mid Right
-    ];
-    setFlowers(initialFlowers);
-    setMiniFlowers([]); // Clear mini flowers
+    // Dense Staggered Garden (14 sunflowers)
+    const garden = [];
+    for (let r = 0; r < 7; r++) {
+      for (let c = 0; c < 2; c++) {
+        garden.push({
+          id: `sun-${r}-${c}`,
+          // Left (5-15%) or Right (65-75%)
+          x: c === 0 ? (Math.random() * 10 + 5) : (Math.random() * 10 + 65),
+          y: (r * 13) + (Math.random() * 5),
+          delay: r * 0.4 + c * 0.2,
+          scale: 0.6 + Math.random() * 0.4
+        });
+      }
+    }
+    setFlowers(garden);
+
+    // 30 background mini flowers
+    const minis = [];
+    for (let i = 0; i < 30; i++) {
+      minis.push({
+        id: `mini-${i}`,
+        x: Math.random() * 92,
+        y: Math.random() * 85,
+        delay: Math.random() * 3 + 0.5,
+        scale: Math.random() * 0.4 + 0.5
+      });
+    }
+    setMiniFlowers(minis);
     
-    setTimeout(() => { setShowMessage(true); }, 2200);
+    // 4.5s delay for the message
+    setTimeout(() => { setShowMessage(true); }, 4500);
   };
 
   const triggerConfetti = () => {
@@ -245,6 +285,11 @@ export default function App() {
         ) : (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
+              {/* Mini flowers for depth */}
+              {miniFlowers.map(flower => (
+                <MiniFlower key={flower.id} {...flower} />
+              ))}
+
               {/* Sunflowers blooming in the background */}
               {flowers.map(flower => (
                 <Sunflower key={flower.id} {...flower} />
@@ -270,6 +315,24 @@ export default function App() {
                     position: 'relative'
                   }}
                 >
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={toggleMusic}
+                    style={{
+                      position: 'absolute',
+                      top: '20px',
+                      right: '25px',
+                      background: 'rgba(255, 215, 0, 0.15)',
+                      border: 'none',
+                      padding: '10px',
+                      borderRadius: '50%',
+                      cursor: 'pointer',
+                      color: isPlaying ? '#ff9800' : '#8d6e63'
+                    }}
+                  >
+                    {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
+                  </motion.button>
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ repeat: Infinity, duration: 2 }}
