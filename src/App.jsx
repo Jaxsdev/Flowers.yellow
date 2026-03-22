@@ -134,14 +134,14 @@ export default function App() {
       audioRef.current.play().catch(e => console.log("Audio blocked:", e));
     }
 
-    // Back to the original 6 perfect flowers
+    // 6 strategic flowers that peek out perfectly on Mobile/iPhone
     const initialFlowers = [
-      { id: 1, x: 15, y: 25, delay: 0.2, scale: 0.75 },
-      { id: 2, x: 75, y: 20, delay: 0.5, scale: 1.1 },
-      { id: 3, x: 48, y: 50, delay: 0.8, scale: 0.95 },
-      { id: 4, x: 20, y: 65, delay: 1.1, scale: 1.2 },
-      { id: 5, x: 80, y: 70, delay: 1.4, scale: 0.8 },
-      { id: 6, x: 40, y: 20, delay: 1.7, scale: 0.6 },
+      { id: 1, x: 8, y: 12, delay: 0.2, scale: 0.75 },   // Top Left Corner
+      { id: 2, x: 92, y: 15, delay: 0.5, scale: 0.9 },   // Top Right Corner
+      { id: 3, x: 15, y: 85, delay: 0.8, scale: 1.1 },   // Bottom Left
+      { id: 4, x: 85, y: 80, delay: 1.1, scale: 1.2 },   // Bottom Right
+      { id: 5, x: 5, y: 50, delay: 1.4, scale: 0.8 },    // Mid Left
+      { id: 6, x: 95, y: 45, delay: 1.7, scale: 0.7 },    // Mid Right
     ];
     setFlowers(initialFlowers);
     setMiniFlowers([]); // Clear mini flowers
@@ -265,7 +265,7 @@ export default function App() {
                     boxShadow: '0 40px 100px rgba(0,0,0,0.15)',
                     textAlign: 'center',
                     zIndex: 100,
-                    width: 'min(90%, 500px)',
+                    width: 'min(82%, 480px)',
                     border: '1px solid rgba(255, 255, 255, 0.5)',
                     position: 'relative'
                   }}
