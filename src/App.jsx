@@ -156,31 +156,31 @@ export default function App() {
       audioRef.current.play().catch(e => console.log("Audio blocked:", e));
     }
 
-    // Randomized "Natural" Garden (18 sunflowers)
-    const naturalGarden = [...Array(18)].map((_, i) => ({
+    // Truly Scattered Garden (No orders, just pure nature)
+    // 16 sunflowers scattered with random offsets
+    const scatteredSuns = [...Array(16)].map((_, i) => ({
       id: `sun-${i}`,
-      // Random but with a bit of "safe margins" from the very edges
-      x: Math.random() * 94 + 3,
+      x: Math.random() * 92 + 4,
       y: Math.random() * 85 + 5,
-      delay: Math.random() * 3 + 0.2,
+      delay: Math.random() * 3 + 0.1,
       scale: 0.6 + Math.random() * 0.4
     }));
-    setFlowers(naturalGarden);
+    setFlowers(scatteredSuns);
 
-    // 40 mini background flowers for maximum texture
-    const newMini = [...Array(40)].map((_, i) => ({
+    // 40 mini flowers for background texture
+    const scatteredMinis = [...Array(40)].map((_, i) => ({
       id: `mini-${i}`,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
+      x: Math.random() * 95,
+      y: Math.random() * 90,
       delay: Math.random() * 3,
       scale: Math.random() * 0.4 + 0.4
     }));
-    setMiniFlowers(newMini);
+    setMiniFlowers(scatteredMinis);
     
-    // 4.5s delay to let everything bloom
+    // Balanced delay (4s)
     setTimeout(() => {
       setShowMessage(true);
-    }, 4500);
+    }, 4000);
   };
 
   const triggerConfetti = () => {
@@ -303,7 +303,7 @@ export default function App() {
                     borderRadius: '35px',
                     boxShadow: '0 40px 100px rgba(0,0,0,0.15)',
                     textAlign: 'center',
-                    zIndex: 100,
+                    zIndex: 999,
                     width: 'min(82%, 480px)',
                     border: '1px solid rgba(255, 255, 255, 0.5)',
                     position: 'relative'
@@ -322,7 +322,8 @@ export default function App() {
                       padding: '10px',
                       borderRadius: '50%',
                       cursor: 'pointer',
-                      color: isPlaying ? '#ff9800' : '#8d6e63'
+                      color: isPlaying ? '#ff9800' : '#8d6e63',
+                      zIndex: 1001
                     }}
                   >
                     {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
@@ -336,12 +337,12 @@ export default function App() {
                   </motion.div>
                   
                   <h2 className="romantic-text" style={{ 
-                    fontSize: 'clamp(2rem, 8vw, 2.8rem)', 
+                    fontSize: 'clamp(1.8rem, 7vw, 2.5rem)', 
                     color: '#3e2723', 
                     marginBottom: '15px',
                     lineHeight: 1.2
                   }}>
-                    ¡Feliz 21 de Marzo!
+                    ¡Feliz 21 de Marzo, {name}!
                   </h2>
                   
                   <p style={{ 
