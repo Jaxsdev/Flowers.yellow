@@ -123,19 +123,19 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- FIXED ARTISTIC FRAME (Expanded Outward) ---
+    // --- FIXED ARTISTIC FRAME (Reverted to compact version) ---
     const artisticPositions = [
-      { x: 3,  y: 4,  s: 0.9, d: 0.1 }, // Top Left (Pinned)
-      { x: 45, y: 3,  s: 0.8, d: 0.4 }, // Top center-ish (Pinned)
-      { x: 92, y: 5,  s: 1.0, d: 0.8 }, // Top Right (Pinned)
-      { x: 2,  y: 42, s: 0.8, d: 1.1 }, // Mid Left (Pinned)
-      { x: 96, y: 38, s: 0.9, d: 1.5 }, // Mid Right (Pinned)
-      { x: 5,  y: 88, s: 1.1, d: 1.9 }, // Bottom Left (Pinned)
-      { x: 45, y: 94, s: 0.9, d: 2.3 }, // Bottom Center (Pinned)
-      { x: 90, y: 92, s: 1.0, d: 2.7 }, // Bottom Right (Pinned)
-      { x: 18, y: 15, s: 0.7, d: 0.5 }, // Inner A (Shifted)
-      { x: 78, y: 12, s: 0.8, d: 0.9 }, // Inner B (Shifted)
-      { x: 6,  y: 58, s: 0.7, d: 1.6 }, // Inner C (Shifted)
+      { x: 5,  y: 6,  s: 0.9, d: 0.2 }, // Top Left 
+      { x: 40, y: 5,  s: 0.8, d: 0.6 }, // Top center-ish 
+      { x: 78, y: 10, s: 1.0, d: 1.0 }, // Top Right 
+      { x: 4,  y: 35, s: 0.8, d: 1.4 }, // Mid Left 
+      { x: 82, y: 32, s: 0.9, d: 1.8 }, // Mid Right 
+      { x: 8,  y: 72, s: 1.1, d: 2.2 }, // Bottom Left 
+      { x: 35, y: 82, s: 0.9, d: 2.6 }, // Bottom Center 
+      { x: 72, y: 78, s: 1.0, d: 3.0 }, // Bottom Right 
+      { x: 22, y: 18, s: 0.7, d: 0.8 }, // Inner A 
+      { x: 64, y: 16, s: 0.8, d: 1.2 }, // Inner B 
+      { x: 12, y: 52, s: 0.7, d: 2.0 }, // Inner C 
     ];
 
     const fixedGarden = artisticPositions.map((p, i) => ({
@@ -201,13 +201,13 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 4.5, duration: 1.2, ease: "easeOut" }}
               style={{
-                background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(25px)', padding: '40px 25px',
+                background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(25px)', padding: '35px 22px',
                 borderRadius: '35px', boxShadow: '0 40px 80px rgba(0,0,0,0.15)', textAlign: 'center',
-                width: 'min(85%, 450px)', zIndex: 999, border: '1px solid rgba(255,255,255,0.5)', position: 'relative'
+                width: 'min(78%, 420px)', zIndex: 999, border: '1px solid rgba(255,255,255,0.5)', position: 'relative'
               }}
             >
-              <Heart size={40} color="#e91e63" fill="#e91e63" style={{ margin: '0 auto 15px' }} />
-              <h2 className="romantic-text" style={{ fontSize: '2.2rem', color: '#3e2723', marginBottom: '15px', lineHeight: '1.1' }}>
+              <Heart size={36} color="#e91e63" fill="#e91e63" style={{ margin: '0 auto 12px' }} />
+              <h2 className="romantic-text" style={{ fontSize: '2.1rem', color: '#3e2723', marginBottom: '12px', lineHeight: '1.1' }}>
                 ¡Feliz 21 de Marzo, {name}!
               </h2>
               <p style={{ fontSize: '1.1rem', color: '#4e342e', fontStyle: 'italic', lineHeight: '1.6' }}>
