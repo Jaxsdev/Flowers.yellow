@@ -156,37 +156,31 @@ export default function App() {
       audioRef.current.play().catch(e => console.log("Audio blocked:", e));
     }
 
-    // Dense Staggered Garden (14 sunflowers)
-    const garden = [];
-    for (let r = 0; r < 7; r++) {
-      for (let c = 0; c < 2; c++) {
-        garden.push({
-          id: `sun-${r}-${c}`,
-          // Left (5-15%) or Right (65-75%)
-          x: c === 0 ? (Math.random() * 10 + 5) : (Math.random() * 10 + 65),
-          y: (r * 13) + (Math.random() * 5),
-          delay: r * 0.4 + c * 0.2,
-          scale: 0.6 + Math.random() * 0.4
-        });
-      }
-    }
-    setFlowers(garden);
+    // Randomized "Natural" Garden (18 sunflowers)
+    const naturalGarden = [...Array(18)].map((_, i) => ({
+      id: `sun-${i}`,
+      // Random but with a bit of "safe margins" from the very edges
+      x: Math.random() * 94 + 3,
+      y: Math.random() * 85 + 5,
+      delay: Math.random() * 3 + 0.2,
+      scale: 0.6 + Math.random() * 0.4
+    }));
+    setFlowers(naturalGarden);
 
-    // 30 background mini flowers
-    const minis = [];
-    for (let i = 0; i < 30; i++) {
-      minis.push({
-        id: `mini-${i}`,
-        x: Math.random() * 92,
-        y: Math.random() * 85,
-        delay: Math.random() * 3 + 0.5,
-        scale: Math.random() * 0.4 + 0.5
-      });
-    }
-    setMiniFlowers(minis);
+    // 40 mini background flowers for maximum texture
+    const newMini = [...Array(40)].map((_, i) => ({
+      id: `mini-${i}`,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      delay: Math.random() * 3,
+      scale: Math.random() * 0.4 + 0.4
+    }));
+    setMiniFlowers(newMini);
     
-    // 4.5s delay for the message
-    setTimeout(() => { setShowMessage(true); }, 4500);
+    // 4.5s delay to let everything bloom
+    setTimeout(() => {
+      setShowMessage(true);
+    }, 4500);
   };
 
   const triggerConfetti = () => {
