@@ -7,142 +7,61 @@ const Sunflower = ({ delay = 0, scale = 1, x = 0, y = 0 }) => (
   <motion.div
     initial={{ scale: 0, rotate: -45, opacity: 0 }}
     animate={{ scale: scale, rotate: 0, opacity: 1 }}
-    transition={{
-      type: "spring",
-      stiffness: 80,
-      damping: 15,
-      delay: delay,
-      duration: 2
-    }}
-    style={{
-      position: 'absolute',
-      left: `${x}%`,
-      top: `${y}%`,
-      zIndex: 5
-    }}
+    transition={{ type: "spring", stiffness: 80, damping: 15, delay: delay, duration: 2 }}
+    style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, zIndex: 5 }}
   >
-    <div className="flower-container" style={{ position: 'relative', width: '150px', height: '150px' }}>
+    <div className="flower-container" style={{ position: 'relative', width: 'clamp(100px, 30vw, 150px)', aspectRatio: '1/1' }}>
       {/* Stem with Leaves */}
-      <motion.div
+      <motion.div 
         initial={{ height: 0 }}
-        animate={{ height: '220px' }}
+        animate={{ height: 'clamp(150px, 40vh, 220px)' }}
         transition={{ delay: delay, duration: 1.2 }}
         style={{
-          width: '10px',
+          width: 'clamp(6px, 1.5vw, 10px)',
           background: 'linear-gradient(to top, #1b5e20, #4caf50)',
           position: 'absolute',
-          bottom: '-180px',
-          left: '70px',
+          bottom: '-120%',
+          left: '46%',
           borderRadius: '5px',
           zIndex: 1
         }}
       >
-        {/* Leaves */}
-        <motion.div
-          initial={{ scale: 0, rotate: -30 }}
-          animate={{ scale: 1, rotate: -30 }}
-          transition={{ delay: delay + 1, duration: 0.5 }}
-          style={{
-            position: 'absolute',
-            width: '40px',
-            height: '25px',
-            background: '#2e7d32',
-            borderRadius: '100% 0 100% 0',
-            left: '-35px',
-            top: '40px'
-          }}
-        />
-        <motion.div
-          initial={{ scale: 0, rotate: 30 }}
-          animate={{ scale: 1, rotate: 30 }}
-          transition={{ delay: delay + 1.2, duration: 0.5 }}
-          style={{
-            position: 'absolute',
-            width: '40px',
-            height: '25px',
-            background: '#388e3c',
-            borderRadius: '0 100% 0 100%',
-            right: '-35px',
-            top: '80px'
-          }}
-        />
+        <div style={{ position: 'absolute', width: '30px', height: '18px', background: '#2e7d32', borderRadius: '100% 0 100% 0', left: '-25px', top: '20%' }} />
+        <div style={{ position: 'absolute', width: '30px', height: '18px', background: '#388e3c', borderRadius: '0 100% 0 100%', right: '-25px', top: '40%' }} />
       </motion.div>
 
-      {/* Back Petals (Darker) */}
+      {/* Petals (Optimized for Mobile) */}
       {[...Array(16)].map((_, i) => (
-        <motion.div
-          key={`back-${i}`}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: delay + 0.5 + i * 0.04 }}
-          style={{
-            position: 'absolute',
-            width: '45px',
-            height: '75px',
-            background: 'linear-gradient(to bottom, #f9a825, #fdd835)',
-            borderRadius: '50% 50% 50% 50% / 80% 80% 20% 20%',
-            left: '52px',
-            top: '-10px',
-            transformOrigin: '23px 75px',
-            rotate: `${i * 22.5}deg`,
-            zIndex: 2,
-            filter: 'brightness(0.9)'
-          }}
-        />
-      ))}
-
-      {/* Front Petals (Brighter) */}
-      {[...Array(16)].map((_, i) => (
-        <motion.div
-          key={`front-${i}`}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 0.9 }}
-          transition={{ delay: delay + 0.8 + i * 0.04 }}
-          style={{
-            position: 'absolute',
-            width: '42px',
-            height: '70px',
-            background: 'linear-gradient(to bottom, #ffeb3b, #fbc02d)',
-            borderRadius: '50% 50% 50% 50% / 80% 80% 20% 20%',
-            left: '54px',
-            top: '-5px',
-            transformOrigin: '21px 70px',
-            rotate: `${i * 22.5 + 11}deg`,
-            zIndex: 3
-          }}
-        />
-      ))}
-
-      {/* Center of the flower */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: delay + 1.2, type: 'spring', damping: 12 }}
-        style={{
+        <div key={i} style={{
           position: 'absolute',
-          width: '65px',
-          height: '65px',
-          backgroundColor: '#3e2723',
-          borderRadius: '50%',
-          left: '42.5px',
-          top: '37.5px',
-          zIndex: 4,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: 'inset 0 0 15px rgba(0,0,0,0.6), 0 4px 10px rgba(0,0,0,0.2)',
-          border: '4px solid #5d4037',
-          overflow: 'hidden'
-        }}
-      >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'radial-gradient(circle, #5d4037 1px, transparent 1px)',
-          backgroundSize: '5px 5px',
-          opacity: 0.8
+          width: '30%',
+          height: '50%',
+          background: i % 2 === 0 ? 'linear-gradient(to bottom, #fbc02d, #fdd835)' : 'linear-gradient(to bottom, #ffeb3b, #fbc02d)',
+          borderRadius: '50% 50% 50% 50% / 80% 80% 20% 20%',
+          left: '35%',
+          top: '0',
+          transformOrigin: '50% 100%',
+          rotate: `${i * 22.5}deg`,
+          zIndex: i % 2 === 0 ? 2 : 3,
+          boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
         }} />
-      </motion.div>
+      ))}
+
+      {/* Center */}
+      <div style={{
+        position: 'absolute',
+        width: '45%',
+        height: '45%',
+        backgroundColor: '#3e2723',
+        borderRadius: '50%',
+        left: '27.5%',
+        top: '27.5%',
+        zIndex: 4,
+        boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5), 0 2px 5px rgba(0,0,0,0.2)',
+        border: '3px solid #5d4037',
+        backgroundImage: 'radial-gradient(circle, #5d4037 1px, transparent 1px)', 
+        backgroundSize: '4px 4px'
+      }} />
     </div>
   </motion.div>
 );
@@ -187,25 +106,25 @@ const FloatingPetal = ({ delay }) => {
 const MiniFlower = ({ delay = 0, scale = 1, x = 0, y = 0 }) => (
   <motion.div
     initial={{ scale: 0, opacity: 0 }}
-    animate={{ scale: scale, opacity: 0.8 }}
+    animate={{ scale: scale, opacity: 0.6 }}
     transition={{ delay: delay, duration: 1 }}
     style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, zIndex: 3 }}
   >
-    <div style={{ position: 'relative', width: '40px', height: '40px' }}>
-      {[...Array(8)].map((_, i) => (
+    <div style={{ position: 'relative', width: 'clamp(30px, 8vw, 40px)', height: 'clamp(30px, 8vw, 40px)' }}>
+      {[...Array(6)].map((_, i) => (
         <div key={i} style={{
           position: 'absolute',
-          width: '12px',
-          height: '18px',
+          width: '40%',
+          height: '60%',
           background: '#fdd835',
           borderRadius: '50%',
-          left: '14px',
+          left: '30%',
           top: '0',
-          transformOrigin: '6px 18px',
-          rotate: `${i * 45}deg`
+          transformOrigin: '50% 100%',
+          rotate: `${i * 60}deg`
         }} />
       ))}
-      <div style={{ position: 'absolute', width: '14px', height: '14px', background: '#5d4037', borderRadius: '50%', left: '13px', top: '13px' }} />
+      <div style={{ position: 'absolute', width: '35%', height: '35%', background: '#5d4037', borderRadius: '50%', left: '32.5%', top: '32.5%' }} />
     </div>
   </motion.div>
 );
@@ -219,7 +138,6 @@ export default function App() {
   
   // Ref for Audio (Better for iOS)
   const audioRef = React.useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     // Initialize audio on mount
@@ -230,17 +148,6 @@ export default function App() {
     };
   }, []);
 
-  const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch(e => console.error("Error playing audio:", e));
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
   const handleStart = () => {
     setHasStarted(true);
     triggerConfetti();
@@ -248,40 +155,34 @@ export default function App() {
     // Crucial for iOS: Play immediately on user click
     if (audioRef.current) {
       audioRef.current.play()
-        .then(() => setIsPlaying(true))
         .catch(e => console.log("Audio blocked:", e));
     }
 
     // Huge amount of flowers!
     const newFlowers = [
-      { id: 1, x: 10, y: 30, delay: 0.2, scale: 0.7 },
-      { id: 2, x: 80, y: 25, delay: 0.5, scale: 1.1 },
-      { id: 3, x: 45, y: 55, delay: 0.8, scale: 1.2 },
-      { id: 4, x: 15, y: 70, delay: 1.1, scale: 0.9 },
-      { id: 5, x: 85, y: 75, delay: 1.4, scale: 0.85 },
-      { id: 6, x: 40, y: 15, delay: 1.7, scale: 0.5 },
-      { id: 7, x: 25, y: 45, delay: 1.9, scale: 0.65 },
-      { id: 8, x: 70, y: 50, delay: 2.1, scale: 1.0 },
-      { id: 9, x: 5, y: 10, delay: 2.3, scale: 0.4 },
-      { id: 10, x: 90, y: 10, delay: 2.5, scale: 0.55 },
-      { id: 11, x: 55, y: 80, delay: 2.7, scale: 0.75 },
-      { id: 12, x: 35, y: 85, delay: 2.9, scale: 0.9 },
+      { id: 1, x: 5, y: 15, delay: 0.2, scale: 0.7 },
+      { id: 2, x: 70, y: 10, delay: 0.5, scale: 1.0 },
+      { id: 3, x: 40, y: 45, delay: 0.8, scale: 1.1 },
+      { id: 4, x: 10, y: 65, delay: 1.1, scale: 0.9 },
+      { id: 5, x: 80, y: 70, delay: 1.4, scale: 0.8 },
+      { id: 6, x: 30, y: 10, delay: 1.7, scale: 0.5 },
+      { id: 7, x: 85, y: 40, delay: 2.0, scale: 0.6 },
     ];
     setFlowers(newFlowers);
 
     // Add mini flowers for variety
-    const newMini = [...Array(15)].map((_, i) => ({
+    const newMini = [...Array(12)].map((_, i) => ({
       id: i,
-      x: Math.random() * 90 + 5,
-      y: Math.random() * 80 + 10,
-      delay: Math.random() * 3 + 1,
-      scale: Math.random() * 0.5 + 0.5
+      x: Math.random() * 90,
+      y: Math.random() * 80,
+      delay: Math.random() * 2 + 1,
+      scale: Math.random() * 0.4 + 0.4
     }));
     setMiniFlowers(newMini);
     
     setTimeout(() => {
       setShowMessage(true);
-    }, 2800);
+    }, 2200);
   };
 
   const triggerConfetti = () => {
@@ -305,21 +206,14 @@ export default function App() {
   };
 
   return (
-    <div style={{
-      position: 'relative',
-      minHeight: '100vh',
-      width: '100%',
-      overflow: 'hidden',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
+    <div style={{ 
+      position: 'relative', minHeight: '100vh', width: '100vw', overflow: 'hidden',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       background: 'radial-gradient(circle, #fff9c4 0%, #fffde7 100%)'
     }}>
       {/* Falling Petals Background */}
-      {[...Array(30)].map((_, i) => (
-        <FloatingPetal key={i} delay={i * 0.4} />
+      {[...Array(20)].map((_, i) => (
+        <FloatingPetal key={i} delay={i * 0.5} />
       ))}
 
       <AnimatePresence mode="wait">
@@ -328,18 +222,18 @@ export default function App() {
             key="setup"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
+            exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
             className="glass-card"
             style={{
               background: 'rgba(255, 255, 255, 0.7)',
               backdropFilter: 'blur(15px)',
-              padding: '60px 40px',
+              padding: 'clamp(40px, 10vw, 60px) 30px',
               borderRadius: '40px',
               border: '2px solid rgba(255, 255, 255, 0.4)',
               boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
               textAlign: 'center',
-              width: '90%',
-              maxWidth: '450px',
+              width: '85%',
+              maxWidth: '400px',
               zIndex: 20
             }}
           >
@@ -351,12 +245,12 @@ export default function App() {
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
               style={{ marginBottom: '30px', display: 'inline-block' }}
             >
-              <Flower2 size={80} color="#fbc02d" fill="#fbc02d" style={{ filter: 'drop-shadow(0 5px 15px rgba(251,192,45,0.4))' }} />
+              <Flower2 size={64} color="#fbc02d" fill="#fbc02d" style={{ filter: 'drop-shadow(0 5px 15px rgba(251,192,45,0.4))' }} />
             </motion.div>
 
-            <h1 style={{ fontSize: '3.5rem', color: '#3e2723', marginBottom: '15px' }}>Para Isabel</h1>
-            <p style={{ color: '#5d4037', fontSize: '1.2rem', marginBottom: '40px', fontStyle: 'italic' }}>
-              Tengo un detalle especial preparado para ti hoy...
+            <h1 style={{ fontSize: 'clamp(2.5rem, 10vw, 3.5rem)', color: '#3e2723', margin: '20px 0 10px' }}>Para Isabel</h1>
+            <p style={{ color: '#5d4037', fontSize: '1.1rem', marginBottom: '30px', fontStyle: 'italic' }}>
+              Tengo algo preparado para ti...
             </p>
 
             <motion.button
@@ -365,13 +259,13 @@ export default function App() {
               onClick={handleStart}
               style={{
                 width: '100%',
-                padding: '20px',
+                padding: '18px',
                 borderRadius: '50px',
                 border: 'none',
                 background: 'linear-gradient(135deg, #fbc02d, #f9a825)',
                 color: 'white',
                 fontWeight: '800',
-                fontSize: '1.3rem',
+                fontSize: '1.2rem',
                 letterSpacing: '1px',
                 cursor: 'pointer',
                 display: 'flex',
@@ -381,67 +275,44 @@ export default function App() {
                 textShadow: '0 1px 2px rgba(0,0,0,0.1)'
               }}
             >
-              DESCUBRIR <Sparkles size={24} />
+              DESCUBRIR <Sparkles size={20} />
             </motion.button>
           </motion.div>
         ) : (
-          <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
-            {/* Mini flowers for density */}
-            {miniFlowers.map(flower => (
-              <MiniFlower key={flower.id} {...flower} />
-            ))}
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
+              {/* Mini flowers for density */}
+              {miniFlowers.map(flower => (
+                <MiniFlower key={flower.id} {...flower} />
+              ))}
 
-            {/* Sunflowers blooming in the background */}
-            {flowers.map(flower => (
-              <Sunflower key={flower.id} {...flower} />
-            ))}
+              {/* Sunflowers blooming in the background */}
+              {flowers.map(flower => (
+                <Sunflower key={flower.id} {...flower} />
+              ))}
+            </div>
 
             {/* Poetic Message Overlay */}
             <AnimatePresence>
               {showMessage && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.5, y: 100, x: "-50%" }}
-                  animate={{ opacity: 1, scale: 1, y: 0, x: "-50%" }}
+                  initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   style={{
-                    position: 'absolute',
-                    top: '15%',
-                    left: '50%',
-                    background: 'rgba(255, 255, 255, 0.82)',
-                    backdropFilter: 'blur(20px)',
-                    padding: '40px 25px',
+                    background: 'rgba(255, 255, 255, 0.85)',
+                    backdropFilter: 'blur(25px)',
+                    padding: 'clamp(30px, 8vw, 45px) 25px',
                     borderRadius: '35px',
                     boxShadow: '0 40px 100px rgba(0,0,0,0.15)',
                     textAlign: 'center',
                     zIndex: 100,
-                    width: 'min(90%, 550px)',
+                    width: 'min(90%, 500px)',
                     border: '1px solid rgba(255, 255, 255, 0.5)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
+                    position: 'relative'
                   }}
                 >
-                  {/* Music Control Indicator */}
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={toggleMusic}
-                    style={{
-                      position: 'absolute',
-                      top: '20px',
-                      right: '25px',
-                      background: 'rgba(255, 215, 0, 0.15)',
-                      border: 'none',
-                      padding: '10px',
-                      borderRadius: '50%',
-                      cursor: 'pointer',
-                      color: isPlaying ? '#ff9800' : '#8d6e63'
-                    }}
-                  >
-                    {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
-                  </motion.button>
-
                   <motion.div
-                    animate={{ scale: [1, 1.3, 1] }}
+                    animate={{ scale: [1, 1.2, 1] }}
                     transition={{ repeat: Infinity, duration: 2 }}
                     style={{ marginBottom: '15px' }}
                   >
@@ -449,16 +320,16 @@ export default function App() {
                   </motion.div>
                   
                   <h2 className="romantic-text" style={{ 
-                    fontSize: 'clamp(2rem, 8vw, 3rem)', 
+                    fontSize: 'clamp(2rem, 8vw, 2.8rem)', 
                     color: '#3e2723', 
                     marginBottom: '15px',
                     lineHeight: 1.2
                   }}>
-                    ¡Feliz 21 de Marzo, {name}!
+                    ¡Feliz 21 de Marzo!
                   </h2>
                   
                   <p style={{ 
-                    fontSize: 'clamp(1rem, 4vw, 1.3rem)', 
+                    fontSize: 'clamp(1rem, 4.5vw, 1.25rem)', 
                     color: '#4e342e', 
                     lineHeight: '1.6', 
                     fontStyle: 'italic',
@@ -466,7 +337,7 @@ export default function App() {
                   }}>
                     Buenas noches Isabel, estas flores amarillas son como tu sonrisa:<br />
                     <strong style={{ display: 'block', marginTop: '10px', color: '#f57f17' }}> Que iluminan el mundo entero.</strong><br />
-                    Cada pétalo es un recordatorio de lo increíble y especial que eres para mí. Gracias por ser esa luz constante. 💛
+                    Cada pétalo es un recordatorio de lo especial que eres para mí. Gracias por ser esa luz constante. 💛
                   </p>
 
                   <motion.div
@@ -485,21 +356,10 @@ export default function App() {
       </AnimatePresence>
 
       {/* Lush grass at the bottom */}
-      <motion.div
-        initial={{ y: 200 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: '180px',
-          background: 'linear-gradient(to top, #1b5e20 0%, #2e7d32 40%, transparent 100%)',
-          zIndex: 1,
-          opacity: 0.8
-        }}
-      />
+      <div style={{
+        position: 'fixed', bottom: 0, left: 0, right: 0, height: 'clamp(80px, 15vh, 120px)',
+        background: 'linear-gradient(to top, #1b5e20 0%, #2e7d32 50%, transparent 100%)', zIndex: 1, opacity: 0.7
+      }} />
     </div>
   );
 }
