@@ -82,18 +82,41 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- TOTAL SCATTERED GARDEN (Pure Nature) ---
-    // 20 sunflowers in completely random spots for a wild look
-    const wildGarden = [...Array(20)].map((_, i) => ({
-      id: `wild-sun-${i}`,
-      x: Math.random() * 95 + 2,
-      y: Math.random() * 88 + 5,
-      delay: Math.random() * 3,
-      scale: 0.6 + Math.random() * 0.5
-    }));
-    setFlowers(wildGarden);
+    // --- COLLISION-AWARE DISPERSION (No overlaps) ---
+    const newFlowers = [];
+    const maxFlowers = 18;
+    const minDistance = 18; // Minimum distance between flower centers (%)
 
-    const miniSet = [...Array(40)].map((_, i) => ({
+    for (let i = 0; i < maxFlowers; i++) {
+      let placed = false;
+      let tries = 0;
+      while (!placed && tries < 50) {
+        const x = Math.random() * 90 + 5;
+        const y = Math.random() * 85 + 5;
+        
+        // Check distance against all flowers already in the array
+        const isTooClose = newFlowers.some(f => {
+          const dx = f.x - x;
+          const dy = f.y - y;
+          return Math.sqrt(dx * dx + dy * dy) < minDistance;
+        });
+
+        if (!isTooClose) {
+          newFlowers.push({
+            id: `safe-sun-${i}`,
+            x, y,
+            delay: Math.random() * 3,
+            scale: 0.65 + Math.random() * 0.4
+          });
+          placed = true;
+        }
+        tries++;
+      }
+    }
+    setFlowers(newFlowers);
+
+    // Mini background flowers (scattered)
+    const miniSet = [...Array(35)].map((_, i) => ({
       id: `m-${i}`,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -102,7 +125,7 @@ export default function App() {
     }));
     setMinis(miniSet);
     
-    // 4.5s delay for blooming
+    // Total wait for message reveal
     setTimeout(() => { /* Delay handled by motion transition in JSX */ }, 4500);
   };
 
