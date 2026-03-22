@@ -123,19 +123,19 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- COLLISION-AWARE DISPERSION (No overlaps) ---
+    // --- COLLISION-AWARE DISPERSION (14 Flowers) ---
     const newFlowers = [];
-    const maxFlowers = 18;
-    const minDistance = 18; // Minimum distance between flower centers (%)
+    const maxFlowers = 14; 
+    const minDistance = 19; // Slightly increased for more air
 
     for (let i = 0; i < maxFlowers; i++) {
       let placed = false;
       let tries = 0;
       while (!placed && tries < 50) {
-        const x = Math.random() * 90 + 5;
-        const y = Math.random() * 85 + 5;
+        // Shifted Left (2-82%) and Up (2-72%)
+        const x = Math.random() * 80 + 2;
+        const y = Math.random() * 70 + 2;
         
-        // Check distance against all flowers already in the array
         const isTooClose = newFlowers.some(f => {
           const dx = f.x - x;
           const dy = f.y - y;
@@ -146,8 +146,8 @@ export default function App() {
           newFlowers.push({
             id: `safe-sun-${i}`,
             x, y,
-            delay: Math.random() * 3,
-            scale: 0.65 + Math.random() * 0.4
+            delay: Math.random() * 2.5,
+            scale: 0.6 + Math.random() * 0.45
           });
           placed = true;
         }
