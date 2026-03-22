@@ -188,10 +188,14 @@ export default function App() {
   const name = "Isabel"; // Fixed name for the special person
   const [showMessage, setShowMessage] = useState(false);
   const [flowers, setFlowers] = useState([]);
+  const [audio] = useState(new Audio('/musica.mp3'));
 
   const handleStart = () => {
     setHasStarted(true);
     triggerConfetti();
+    
+    // Play the song
+    audio.play().catch(e => console.log("Auto-play blocked or error:", e));
 
     const newFlowers = [
       { id: 1, x: 15, y: 25, delay: 0.2, scale: 0.75 },
