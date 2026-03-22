@@ -82,32 +82,28 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- SCATTERED GARDEN (Natural Chaos Algorithm) ---
-    const rows = 5;
-    const cols = 3;
-    const messyGarden = [];
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        // High Jitter: Randomly shift each flower far from its grid point
-        messyGarden.push({
-          id: `f-${r}-${c}`,
-          x: (c * 30) + 10 + (Math.random() * 20), // 20% random shift
-          y: (r * 18) + 5 + (Math.random() * 12),  // 12% random shift
-          delay: Math.random() * 2,
-          scale: 0.65 + Math.random() * 0.45
-        });
-      }
-    }
-    setFlowers(messyGarden);
+    // --- TOTAL SCATTERED GARDEN (Pure Nature) ---
+    // 20 sunflowers in completely random spots for a wild look
+    const wildGarden = [...Array(20)].map((_, i) => ({
+      id: `wild-sun-${i}`,
+      x: Math.random() * 95 + 2,
+      y: Math.random() * 88 + 5,
+      delay: Math.random() * 3,
+      scale: 0.6 + Math.random() * 0.5
+    }));
+    setFlowers(wildGarden);
 
-    const miniSet = [...Array(35)].map((_, i) => ({
+    const miniSet = [...Array(40)].map((_, i) => ({
       id: `m-${i}`,
-      x: Math.random() * 96 + 2,
-      y: Math.random() * 94 + 3,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
       delay: Math.random() * 3,
       scale: 0.4 + Math.random() * 0.3
     }));
     setMinis(miniSet);
+    
+    // 4.5s delay for blooming
+    setTimeout(() => { /* Delay handled by motion transition in JSX */ }, 4500);
   };
 
   const triggerConfetti = () => {
@@ -154,9 +150,6 @@ export default function App() {
                 width: 'min(85%, 450px)', zIndex: 999, border: '1px solid rgba(255,255,255,0.5)', position: 'relative'
               }}
             >
-              <button onClick={toggleMusic} style={{ position: 'absolute', top: '15px', right: '15px', background: 'none', border: 'none', cursor: 'pointer', color: '#fbc02d' }}>
-                <Volume2 size={24} />
-              </button>
               <Heart size={40} color="#e91e63" fill="#e91e63" style={{ margin: '0 auto 15px' }} />
               <h2 className="romantic-text" style={{ fontSize: '2.2rem', color: '#3e2723', marginBottom: '15px', lineHeight: '1.1' }}>
                 ¡Feliz 21 de Marzo, {name}!
