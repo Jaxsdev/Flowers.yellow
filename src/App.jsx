@@ -123,38 +123,31 @@ export default function App() {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
     }
 
-    // --- COLLISION-AWARE DISPERSION (11 Flowers) ---
-    const newFlowers = [];
-    const maxFlowers = 11;
-    const minDistance = 21; // Increased air for maximum separation
+    // --- FIXED ARTISTIC DISPERSION (11 Flowers in a dynamic arc) ---
+    // Pre-calculated coordinates to surround the message without being a square
+    const artisticPositions = [
+      { x: 12, y: 12, s: 0.9, d: 0.2 }, // Top Left
+      { x: 50, y: 8,  s: 0.8, d: 0.6 }, // Top center-ish
+      { x: 88, y: 15, s: 1.0, d: 1.0 }, // Top Right
+      { x: 10, y: 45, s: 0.8, d: 1.4 }, // Mid Left
+      { x: 92, y: 40, s: 0.9, d: 1.8 }, // Mid Right
+      { x: 15, y: 82, s: 1.1, d: 2.2 }, // Bottom Left
+      { x: 45, y: 92, s: 0.9, d: 2.6 }, // Bottom Center
+      { x: 82, y: 88, s: 1.0, d: 3.0 }, // Bottom Right
+      { x: 28, y: 25, s: 0.7, d: 0.8 }, // Inner Support 1
+      { x: 74, y: 22, s: 0.8, d: 1.2 }, // Inner Support 2
+      { x: 18, y: 62, s: 0.7, d: 2.0 }, // Inner Support 3
+    ];
 
-    for (let i = 0; i < maxFlowers; i++) {
-      let placed = false;
-      let tries = 0;
-      while (!placed && tries < 50) {
-        // Shifted Left and Up as requested before
-        const x = Math.random() * 80 + 2;
-        const y = Math.random() * 70 + 2;
-        
-        const isTooClose = newFlowers.some(f => {
-          const dx = f.x - x;
-          const dy = f.y - y;
-          return Math.sqrt(dx * dx + dy * dy) < minDistance;
-        });
-
-        if (!isTooClose) {
-          newFlowers.push({
-            id: `safe-sun-${i}`,
-            x, y,
-            delay: Math.random() * 2.5,
-            scale: 0.65 + Math.random() * 0.4
-          });
-          placed = true;
-        }
-        tries++;
-      }
-    }
-    setFlowers(newFlowers);
+    const fixedGarden = artisticPositions.map((p, i) => ({
+      id: `fixed-sun-${i}`,
+      x: p.x,
+      y: p.y,
+      scale: p.s,
+      delay: p.d
+    }));
+    
+    setFlowers(fixedGarden);
 
     // Mini background flowers (scattered)
     const miniSet = [...Array(35)].map((_, i) => ({
