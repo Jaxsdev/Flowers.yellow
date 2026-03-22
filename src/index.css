@@ -1,0 +1,45 @@
+:root {
+  --primary: #FFD700;
+  --secondary: #FFA500;
+  --bg-top: #FFF8E1;
+  --bg-bottom: #FFFDE7;
+  --text: #5D4037;
+  --leaf: #4CAF50;
+  --accent: #FF4081;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  color: var(--text);
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1, .romantic-text {
+  font-family: 'Dancing Script', cursive;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.petal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10;
+  user-select: none;
+}
