@@ -183,54 +183,105 @@ const FloatingPetal = ({ delay }) => {
   );
 };
 
+// Flower Variant Component (Smaller Flowers)
+const MiniFlower = ({ delay = 0, scale = 1, x = 0, y = 0 }) => (
+  <motion.div
+    initial={{ scale: 0, opacity: 0 }}
+    animate={{ scale: scale, opacity: 0.8 }}
+    transition={{ delay: delay, duration: 1 }}
+    style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, zIndex: 3 }}
+  >
+    <div style={{ position: 'relative', width: '40px', height: '40px' }}>
+      {[...Array(8)].map((_, i) => (
+        <div key={i} style={{
+          position: 'absolute',
+          width: '12px',
+          height: '18px',
+          background: '#fdd835',
+          borderRadius: '50%',
+          left: '14px',
+          top: '0',
+          transformOrigin: '6px 18px',
+          rotate: `${i * 45}deg`
+        }} />
+      ))}
+      <div style={{ position: 'absolute', width: '14px', height: '14px', background: '#5d4037', borderRadius: '50%', left: '13px', top: '13px' }} />
+    </div>
+  </motion.div>
+);
+
 export default function App() {
   const [hasStarted, setHasStarted] = useState(false);
-  const name = "Isabel"; // Fixed name for the special person
+  const name = "Isabel";
   const [showMessage, setShowMessage] = useState(false);
   const [flowers, setFlowers] = useState([]);
+  const [miniFlowers, setMiniFlowers] = useState([]);
   
-  // Robust Audio Handling
-  const [audio] = useState(new Audio('/musica.mp3'));
+  // Ref for Audio (Better for iOS)
+  const audioRef = React.useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    audio.loop = true;
+    // Initialize audio on mount
+    audioRef.current = new Audio('/musica.mp3');
+    audioRef.current.loop = true;
     return () => {
-      audio.pause();
+      if (audioRef.current) audioRef.current.pause();
     };
-  }, [audio]);
+  }, []);
 
   const toggleMusic = () => {
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play().catch(e => console.error("Error playing audio:", e));
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(e => console.error("Error playing audio:", e));
+      }
+      setIsPlaying(!isPlaying);
     }
-    setIsPlaying(!isPlaying);
   };
 
   const handleStart = () => {
     setHasStarted(true);
     triggerConfetti();
     
-    // Force play on first interaction
-    audio.play()
-      .then(() => setIsPlaying(true))
-      .catch(e => console.log("Auto-play blocked, user needs to click the music icon:", e));
+    // Crucial for iOS: Play immediately on user click
+    if (audioRef.current) {
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(e => console.log("Audio blocked:", e));
+    }
 
+    // Huge amount of flowers!
     const newFlowers = [
-      { id: 1, x: 15, y: 25, delay: 0.2, scale: 0.75 },
-      { id: 2, x: 75, y: 20, delay: 0.5, scale: 1.1 },
-      { id: 3, x: 48, y: 50, delay: 0.8, scale: 0.95 },
-      { id: 4, x: 20, y: 65, delay: 1.1, scale: 1.2 },
-      { id: 5, x: 80, y: 70, delay: 1.4, scale: 0.8 },
-      { id: 6, x: 40, y: 20, delay: 1.7, scale: 0.6 },
+      { id: 1, x: 10, y: 30, delay: 0.2, scale: 0.7 },
+      { id: 2, x: 80, y: 25, delay: 0.5, scale: 1.1 },
+      { id: 3, x: 45, y: 55, delay: 0.8, scale: 1.2 },
+      { id: 4, x: 15, y: 70, delay: 1.1, scale: 0.9 },
+      { id: 5, x: 85, y: 75, delay: 1.4, scale: 0.85 },
+      { id: 6, x: 40, y: 15, delay: 1.7, scale: 0.5 },
+      { id: 7, x: 25, y: 45, delay: 1.9, scale: 0.65 },
+      { id: 8, x: 70, y: 50, delay: 2.1, scale: 1.0 },
+      { id: 9, x: 5, y: 10, delay: 2.3, scale: 0.4 },
+      { id: 10, x: 90, y: 10, delay: 2.5, scale: 0.55 },
+      { id: 11, x: 55, y: 80, delay: 2.7, scale: 0.75 },
+      { id: 12, x: 35, y: 85, delay: 2.9, scale: 0.9 },
     ];
     setFlowers(newFlowers);
+
+    // Add mini flowers for variety
+    const newMini = [...Array(15)].map((_, i) => ({
+      id: i,
+      x: Math.random() * 90 + 5,
+      y: Math.random() * 80 + 10,
+      delay: Math.random() * 3 + 1,
+      scale: Math.random() * 0.5 + 0.5
+    }));
+    setMiniFlowers(newMini);
     
     setTimeout(() => {
       setShowMessage(true);
-    }, 2500);
+    }, 2800);
   };
 
   const triggerConfetti = () => {
@@ -335,6 +386,11 @@ export default function App() {
           </motion.div>
         ) : (
           <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
+            {/* Mini flowers for density */}
+            {miniFlowers.map(flower => (
+              <MiniFlower key={flower.id} {...flower} />
+            ))}
+
             {/* Sunflowers blooming in the background */}
             {flowers.map(flower => (
               <Sunflower key={flower.id} {...flower} />
@@ -430,7 +486,7 @@ export default function App() {
 
       {/* Lush grass at the bottom */}
       <motion.div
-        initial={{ y: 120 }}
+        initial={{ y: 200 }}
         animate={{ y: 0 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
         style={{
@@ -438,9 +494,10 @@ export default function App() {
           bottom: 0,
           left: 0,
           right: 0,
-          height: '100px',
-          background: 'linear-gradient(to top, #1b5e20, #2e7d32, transparent)',
-          zIndex: 1
+          height: '180px',
+          background: 'linear-gradient(to top, #1b5e20 0%, #2e7d32 40%, transparent 100%)',
+          zIndex: 1,
+          opacity: 0.8
         }}
       />
     </div>
